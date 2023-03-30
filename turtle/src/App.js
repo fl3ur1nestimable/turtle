@@ -2,6 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,9 +18,18 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Turtle
         </a>
       </header>
+      <body>
+      <form id="form" method='POST'>
+        <input type="text" name="author"/>
+        <input type="text" name="title"/>
+        <textarea name="decription" rows="5" cols="50" maxlength="500"></textarea>
+        <input type="text" name="price"/>
+        <button type="submit">Validate</button>
+      </form>
+      </body>
     </div>
   );
 }
