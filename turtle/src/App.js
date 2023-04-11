@@ -1,34 +1,58 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{useState} from 'react';
+import Form from './Form';
 
 function App() {
+  const [Author, setAuthor] = useState('');
+  const [Title, setTitle] = useState('');
+  const [Description, setDescription] = useState('');
+  const [Price, setPrice] = useState('');
 
-  
+  const addItem = (author, title, description, price) => {
+    console.log(author, title, description, price);
+    setAuthor([Author, author]);
+    setTitle([Title, title]);
+    setDescription([Description, description]);
+    setPrice([Price, price]);
+    var data = {
+      author: author,
+      title: title,
+      description: description,
+      price: price,
+      status: 'Posted'
+  };
+  fetch('http://localhost:5000/liste', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Book added successfully');
+          return response.json();
+      } else {
+          throw new Error('Something went wrong ...');
+      }
+  })
+  .then(data => console.log(data))
+  .catch(error => {
+      console.error('Error:', error);
+  }
+  );
+  }
+
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Turtle
-        </a>
-      </header>
+
       <body>
-      <form id="form" method='POST'>
-        <input type="text" name="author"/>
-        <input type="text" name="title"/>
-        <textarea name="decription" rows="5" cols="50" maxlength="500"></textarea>
-        <input type="text" name="price"/>
-        <button type="submit">Validate</button>
-      </form>
+        <h1>Bookstore</h1>
+        <div id="bookstore">
+        <Form addItem={addItem} />
+        </div>
+      
       </body>
     </div>
   );

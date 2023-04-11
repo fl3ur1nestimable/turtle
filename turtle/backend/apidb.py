@@ -49,8 +49,8 @@ def completeTask(task_id):
     conn.commit()
     conn.close()
 
-createTasks()
-acceptTask('Emma', 1)
-acceptTask('Marie', 3)
-completeTask(1)
+#createTasks()
+#acceptTask('Emma', 1)
+#acceptTask('Marie', 3)
+#completeTask(1)
 
