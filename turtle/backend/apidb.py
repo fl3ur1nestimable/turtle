@@ -20,9 +20,12 @@ def getAllTasks():
     c = conn.cursor()
     c.execute('''SELECT * FROM tasks''')
     tasks = c.fetchall()
-    print(tasks)
+    datatosend = []
+    for task in tasks:
+        datatosend.append({'id': task[0], 'author': task[1], 'title': task[2], 'description': task[3], 'price': task[4], 'status': task[5]})
     conn.commit()
     conn.close()
+    return datatosend
 
 def addTask(author, title, description, price):
     conn = sqlite3.connect('./database.db')

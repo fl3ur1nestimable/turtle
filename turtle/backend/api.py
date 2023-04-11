@@ -33,3 +33,6 @@ def complete_task():
     task_id = data['task_id']
     completeTask(task_id)
     return jsonify({'message': 'Task completed'}),200
+
+if __name__ == '__main__':
+    app.run()
