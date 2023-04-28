@@ -15,6 +15,14 @@ def createTasks():
     conn.commit()
     conn.close()
     
+def createUsers():
+    conn = sqlite3.connect('./database.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS users
+                (id_user integer not null primary key autoincrement, username text not null, password text not null, email text not null)''')
+    conn.commit()
+    conn.close()
+    
 def getAllTasks():
     conn = sqlite3.connect('./database.db')
     c = conn.cursor()
@@ -51,7 +59,10 @@ def completeTask(task_id):
     c.execute('''DELETE FROM accepted WHERE task_id = ?''', (task_id,))
     conn.commit()
     conn.close()
+    
 
+
+#createUsers()
 #createTasks()
 #acceptTask('Emma', 1)
 #acceptTask('Marie', 3)
