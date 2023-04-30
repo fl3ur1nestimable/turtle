@@ -1,76 +1,36 @@
-import './App.css';
-import React,{useEffect, useState} from 'react';
-import Form from './Form';
-import Liste from './Liste';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import Login from './Login';
+import Home from './Home';
+import useToken from './useToken';
+import Register from './Register';
 
-function App() {
-  const [Author, setAuthor] = useState('');
-  const [Title, setTitle] = useState('');
-  const [Description, setDescription] = useState('');
-  const [Price, setPrice] = useState('');
-  const [Status, setStatus] = useState('');
-  const [tasks, setTasks] = useState([]);
+function AppClass() {
+    const [user, setUser] = useState('');
+    const { token, removeToken, setToken } = useToken();
 
-  const addItem = (author, title, description, price) => {
-    console.log(author, title, description, price);
-    if(!author || !title || !description || !price) return;
-    setAuthor([Author, author]);
-    setTitle([Title, title]);
-    setDescription([Description, description]);
-    setPrice([Price, price]);
-    var data = {
-      author: author,
-      title: title,
-      description: description,
-      price: price,
-      status: 'Posted'
-    };
-    fetch('http://localhost:5000/tasks', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Book added successfully');
-            return response.json();
-        } else {
-            throw new Error('Something went wrong ...');
-        }
-    })
-    .then(data => {
-      console.log(data);
-      updateList();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-  }
+    const changeUser = (user) => {
+        console.log(user);
+        setUser(user);
+    }
 
-  const updateList = () => {
-    fetch('http://localhost:5000/tasks')
-    .then(response => response.json())
-    .then(data => {
-      setTasks(data);
-    });
-  }
+    useEffect(() => {
+        changeUser(user);
+    }, [user]);
 
-  useEffect(() => {
-    updateList();
-  }, []);
+    return (
+        <Router>
+            <div>
+                <Routes>
+                    <Route path="/login" element={<Login setToken={setToken} changeUser={changeUser} />} />
+                    <Route path="/" element={<Home token={token} removeToken={removeToken} user={user} />} />
+                    <Route path="/register" element={<Register />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 
-
-  return (
-    <div className="App">
-        <h1>Bookstore</h1>
-        <div id="bookstore">
-        <Form addItem={addItem} />
-        <Liste tasks={tasks} updateList={updateList}/>
-        </div>
-    </div>
-  );
 }
 
-export default App;
+
+export default AppClass;
