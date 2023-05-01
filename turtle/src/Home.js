@@ -118,6 +118,7 @@ function Home(props) {
             <div id="bookstore">
                 <Form addItem={addItem} />
                 <Liste tasks={tasks} updateList={updateList} />
+                <button onClick={() => window.location.replace('/profil')}>Go to Profil</button>
             </div>
         </div>
     );

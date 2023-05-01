@@ -4,6 +4,7 @@ import Login from './Login';
 import Home from './Home';
 import useToken from './useToken';
 import Register from './Register';
+import Profil from './Profil';
 
 function AppClass() {
     const [user, setUser] = useState('');
@@ -25,6 +26,7 @@ function AppClass() {
                     <Route path="/login" element={<Login setToken={setToken} changeUser={changeUser} />} />
                     <Route path="/" element={<Home token={token} removeToken={removeToken} user={user} />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/profil" element={<Profil />} />
                 </Routes>
             </div>
         </Router>

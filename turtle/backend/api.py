@@ -117,7 +117,7 @@ def logout():
     return resp, 200
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profil', methods=['GET'])
 @jwt_required()
 def my_profile():
     identity = get_jwt_identity()
