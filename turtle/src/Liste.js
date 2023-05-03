@@ -3,7 +3,16 @@ import React from 'react';
 class Liste extends React.Component{
     componentDidMount(){
         this.props.updateList();
+        
+    
     }
+
+
+    acceptation=(task)=>{
+        console.log("accepter");
+        this.props.acceptTask(task.id);
+    }
+
 
     render(){
         return(
@@ -26,6 +35,17 @@ class Liste extends React.Component{
                                 <td>{task.description}</td>
                                 <td>{task.price}</td>
                                 <td>{task.status}</td>
+
+                                
+                                <td>
+                                  {
+                                    task.status === 'Posted'?
+                                    <button onClick={()=>this.acceptation(task)}>Accepter</button>
+                                    :null
+                                  }  
+                                </td>  
+                                
+                                
                             </tr>
                         ))}
                     </tbody>
