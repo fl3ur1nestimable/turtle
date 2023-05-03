@@ -26,7 +26,7 @@ function AppClass() {
                     <Route path="/login" element={<Login setToken={setToken} changeUser={changeUser} />} />
                     <Route path="/" element={<Home token={token} removeToken={removeToken} user={user} />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/profil" element={<Profil />} />
+                    <Route exact path="/profil" element={<Profil token={token} setToken={setToken}/>}/>
                 </Routes>
             </div>
         </Router>

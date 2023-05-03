@@ -40,9 +40,10 @@ def get_tasks():
 
 
 @app.route('/tasks', methods=['POST'])
+@jwt_required()
 def add_task():
     data = request.get_json()
-    author = data['author']
+    author = getUserByMail(get_jwt_identity())
     title = data['title']
     description = data['description']
     price = data['price']
@@ -121,10 +122,11 @@ def logout():
 @jwt_required()
 def my_profile():
     identity = get_jwt_identity()
+    acces_token = create_access_token(identity=identity)
     username = getUserByMail(identity)
     posted = getUserPosted(username)
     accepted = getUserAccepted(username)
-    data = {"username": username, "posted": posted, "accepted": accepted}
+    data = {"username": username, "posted": posted, "accepted": accepted, "access_token": acces_token}
     return jsonify(data), 200
 
 

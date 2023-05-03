@@ -9,47 +9,44 @@ function Home(props) {
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Price, setPrice] = useState('');
-    const [Status, setStatus] = useState('');
+    //const [Status, setStatus] = useState('');
     const [tasks, setTasks] = useState([]);
     const token = props.token;
     const user = props.user;
 
-    const addItem = (author, title, description, price) => {
-        console.log(author, title, description, price);
-        if (!author || !title || !description || !price) return;
-        setAuthor([Author, author]);
+    const addItem = ( title, description, price) => {
+        console.log( title, description, price);
+        if ( !title || !description || !price) return;
+        setAuthor([Author, user]);
         setTitle([Title, title]);
         setDescription([Description, description]);
         setPrice([Price, price]);
         var data = {
-            author: author,
+            author: user,
             title: title,
             description: description,
             price: price,
             status: 'Posted'
         };
-        fetch('http://localhost:5000/tasks', {
-            method: 'POST',
+        axios({
+            method: 'post',
+            url: 'http://localhost:5000/tasks',
+            data: data,
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+                'Authorization': 'Bearer ' + token
+            }
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Book added successfully');
-                    return response.json();
-                } else {
-                    throw new Error('Something went wrong ...');
-                }
-            })
-            .then(data => {
-                console.log(data);
-                updateList();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        .then(response => {
+            console.log(response);
+            updateList();
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+            }
+        });
     }
 
     const logout = () => {
@@ -96,6 +93,7 @@ function Home(props) {
                                 }
                             }>Login</button>
                             : <button onClick={logout}>Logout</button>
+
                     }
                     {
                         !token && token !== "" && token !== undefined ?
@@ -103,22 +101,33 @@ function Home(props) {
                                 () => {
                                     window.location.href = '/register';
                                 }
-                            }>Register</button> : null
+                            }>Register</button> 
+                            : <button onClick={
+                                () => {
+                                    window.location.href = '/profil';
+                                }
+                            }>Profil</button>
                     }
 
                     {
                         /*!token && token!=="" &&token!== undefined?
                         'user not connected' : 'user connected'*/
                         user && user !== "" && user !== undefined ?
-                            'Welcome ' + props.user : null
+                            'Welcome ' + user : 'user not connected'
                     }
                 </div>
             </nav>
             <h1>Bookstore</h1>
             <div id="bookstore">
-                <Form addItem={addItem} />
+                {token && token !=="" && token!==undefined ? (
+                  <>
+                    <Form addItem={addItem} />
+                  </>
+                ) : (
+                  <p>You have to be connected if you want to make a proposition</p>
+                )}
+                
                 <Liste tasks={tasks} updateList={updateList} />
-                <button onClick={() => window.location.replace('/profil')}>Go to Profil</button>
             </div>
         </div>
     );

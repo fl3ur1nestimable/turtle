@@ -5,35 +5,39 @@ import axios from "axios";
 
 function Profil(props) {
   const [username, setUsername] = useState('');
-  const [posted, setPosted] = useState('');
-  const [accepted, setAccepted] = useState('');
-  const [tasks, setTasks] = useState([]);
+  const [posted, setPosted] = useState([]);
+  const [accepted, setAccepted] = useState([]);
   const [note, setNote] = useState('0');
-
-  useEffect(() => {
-    if (props.token) {
+    
+    function getData() {
       axios({
         method: "GET",
-        url: "http://localhost:5000/profil",
+        url:"http://localhost:5000/profil",
         headers: {
-          Authorization: `Bearer ${props.token}`
+          Authorization: 'Bearer ' + props.token
         }
       })
-        .then((response) => {
-          console.log(response.data);
-          setTasks(response.data.tasks);
-          setUsername(response.data.username);
-          setPosted(response.data.posted);
-          setAccepted(response.data.accepted);
-          console.log(posted);
-          console.log(accepted);
-        }).catch((error) => {
-          if (error.response) {
-            console.log(error.response)
+      .then((response) => {
+        const res =response.data
+        res.access_token && props.setToken(res.access_token)
+        setUsername(res.username)
+        setPosted(res.posted)
+        setAccepted(res.accepted)
+        console.log(username)
+        console.log(posted)
+        console.log(accepted)
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
           }
-        })
-    }
-  }, [props.token]);
+      })}
+      
+      useEffect(() => {
+        getData()
+      }, [])
+
 
   return (
     <div>
@@ -44,7 +48,6 @@ function Profil(props) {
       <table>
         <thead>
           <tr>
-            <th>Author</th>
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
@@ -53,9 +56,8 @@ function Profil(props) {
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task, index) => (
+          {posted.map((task, index) => (
             <tr key={index}>
-              <td>{task.author}</td>
               <td>{task.title}</td>
               <td>{task.description}</td>
               <td>{task.price}</td>
