@@ -76,6 +76,25 @@ function Home(props) {
             });
     }
 
+    const acceptTask = (id) => {
+    console.log(id);
+    axios({
+      method: 'post',
+      url: 'http://localhost:5000/accept',
+      data: {
+        task_id: id,
+        acceptor: user
+      }
+    })
+    .then(response => {
+      console.log(response);
+      updateList();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
     useEffect(() => {
         updateList();
     }, []);
