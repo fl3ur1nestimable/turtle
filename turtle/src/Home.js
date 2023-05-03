@@ -9,14 +9,13 @@ function Home(props) {
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Price, setPrice] = useState('');
-    //const [Status, setStatus] = useState('');
     const [tasks, setTasks] = useState([]);
     const token = props.token;
-    const user = props.user;
+    const [user, setUser] = useState('');
 
-    const addItem = ( title, description, price) => {
-        console.log( title, description, price);
-        if ( !title || !description || !price) return;
+    const addItem = (title, description, price) => {
+        console.log(title, description, price);
+        if (!title || !description || !price) return;
         setAuthor([Author, user]);
         setTitle([Title, title]);
         setDescription([Description, description]);
@@ -36,17 +35,17 @@ function Home(props) {
                 'Authorization': 'Bearer ' + token
             }
         })
-        .then(response => {
-            console.log(response);
-            updateList();
-        })
-        .catch(error => {
-            if (error.response) {
-                console.log(error.response)
-                console.log(error.response.status)
-                console.log(error.response.headers)
-            }
-        });
+            .then(response => {
+                console.log(response);
+                updateList();
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response)
+                    console.log(error.response.status)
+                    console.log(error.response.headers)
+                }
+            });
     }
 
     const logout = () => {
@@ -65,7 +64,6 @@ function Home(props) {
                     console.log(error.response.headers)
                 }
             });
-
     }
 
     const updateList = () => {
@@ -77,27 +75,46 @@ function Home(props) {
     }
 
     const acceptTask = (id) => {
-    console.log(id);
-    axios({
-      method: 'post',
-      url: 'http://localhost:5000/accept',
-      data: {
-        task_id: id,
-        acceptor: user
-      }
-    })
-    .then(response => {
-      console.log(response);
-      updateList();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  }
+        console.log(id);
+        axios({
+            method: 'post',
+            url: 'http://localhost:5000/accept',
+            data: {
+                task_id: id,
+                acceptor: user
+            }
+        })
+            .then(response => {
+                console.log(response);
+                updateList();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
     useEffect(() => {
         updateList();
-    }, []);
+        const getUser = () => {
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/username',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(response => {
+                setUser(response.data.username);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        if(token && token !== "" && token !== undefined) {
+            getUser();
+        }
+    }, [token]);
+
 
 
     return (
@@ -120,7 +137,7 @@ function Home(props) {
                                 () => {
                                     window.location.href = '/register';
                                 }
-                            }>Register</button> 
+                            }>Register</button>
                             : <button onClick={
                                 () => {
                                     window.location.href = '/profil';
@@ -129,24 +146,22 @@ function Home(props) {
                     }
 
                     {
-                        /*!token && token!=="" &&token!== undefined?
-                        'user not connected' : 'user connected'*/
                         user && user !== "" && user !== undefined ?
-                            'Welcome ' + user : 'user not connected'
+                            'Welcome ' + user : null
                     }
                 </div>
             </nav>
             <h1>Bookstore</h1>
             <div id="bookstore">
-                {token && token !=="" && token!==undefined ? (
-                  <>
-                    <Form addItem={addItem} />
-                  </>
+                {token && token !== "" && token !== undefined ? (
+                    <>
+                        <Form addItem={addItem} />
+                    </>
                 ) : (
-                  <p>You have to be connected if you want to make a proposition</p>
+                    <p>You have to be connected in order to post a task</p>
                 )}
-                
-                <Liste tasks={tasks} updateList={updateList} />
+
+                <Liste tasks={tasks} updateList={updateList} token={token} acceptTask={acceptTask} user={user} />
             </div>
         </div>
     );

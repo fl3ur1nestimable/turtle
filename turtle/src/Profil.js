@@ -8,35 +8,32 @@ function Profil(props) {
   const [posted, setPosted] = useState([]);
   const [accepted, setAccepted] = useState([]);
   const [note, setNote] = useState('0');
-    
+
+  useEffect(() => {
     function getData() {
       axios({
         method: "GET",
-        url:"http://localhost:5000/profil",
+        url: "http://localhost:5000/profil",
         headers: {
           Authorization: 'Bearer ' + props.token
         }
       })
-      .then((response) => {
-        const res =response.data
-        res.access_token && props.setToken(res.access_token)
-        setUsername(res.username)
-        setPosted(res.posted)
-        setAccepted(res.accepted)
-        console.log(username)
-        console.log(posted)
-        console.log(accepted)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+        .then((response) => {
+          const res = response.data
+          res.access_token && props.setToken(res.access_token)
+          setUsername(res.username)
+          setPosted(res.posted)
+          setAccepted(res.accepted)
+        }).catch((error) => {
+          if (error.response) {
+            console.log(error.response)
+            console.log(error.response.status)
+            console.log(error.response.headers)
           }
-      })}
-      
-      useEffect(() => {
-        getData()
-      }, [])
+        })
+    }
+    getData()
+  }, [props])
 
 
   return (
@@ -44,7 +41,7 @@ function Profil(props) {
       <h1>Profil</h1>
       <p>Welcome back {username}</p>
 
-      <h2> here is the list of your propositions</h2>
+      <h2>Posted Tasks</h2>
       <table>
         <thead>
           <tr>
@@ -72,6 +69,29 @@ function Profil(props) {
                   <p>Activity not completed</p>
                 )}
               </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Accepted tasks</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {accepted.map((task, index) => (
+            <tr key={index}>
+              <td>{task.author}</td>
+              <td>{task.title}</td>
+              <td>{task.description}</td>
+              <td>{task.price}</td>
+              <td>{task.status}</td>
             </tr>
           ))}
         </tbody>

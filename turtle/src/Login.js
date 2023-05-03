@@ -31,8 +31,6 @@ function Login(props) {
     })
       .then((response) => {
         props.setToken(response.data.access_token);
-        props.changeUser(response.data.name);
-        console.log(response.data.name);
         window.location.href = "/";
       }).catch((error) => {
         if (error.response) {
@@ -43,7 +41,6 @@ function Login(props) {
       })
 
   }
-
 
   return (
     <div className="Login">

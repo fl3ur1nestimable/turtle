@@ -129,6 +129,14 @@ def my_profile():
     data = {"username": username, "posted": posted, "accepted": accepted, "access_token": acces_token}
     return jsonify(data), 200
 
+@app.route('/username', methods=['GET'])
+@jwt_required()
+def get_username():
+    identity = get_jwt_identity()
+    username = getUserByMail(identity)
+    data = {"username": username}
+    return jsonify(data), 200
+
 
 if __name__ == '__main__':
     app.run()
