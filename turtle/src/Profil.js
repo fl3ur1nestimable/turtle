@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import './profil.css';
 import axios from "axios";
 
@@ -9,7 +9,6 @@ function Profil(props) {
   const [accepted, setAccepted] = useState([]);
   const [note, setNote] = useState('0');
 
-  useEffect(() => {
     function getData() {
       axios({
         method: "GET",
@@ -23,6 +22,7 @@ function Profil(props) {
           res.access_token && props.setToken(res.access_token)
           setUsername(res.username)
           setPosted(res.posted)
+          console.log(res.posted)
           setAccepted(res.accepted)
         }).catch((error) => {
           if (error.response) {
@@ -33,7 +33,6 @@ function Profil(props) {
         })
     }
     getData()
-  }, [props])
 
 
   return (

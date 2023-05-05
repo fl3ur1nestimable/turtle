@@ -21,6 +21,8 @@ class Liste extends React.Component {
                             <th>Description</th>
                             <th>Price</th>
                             <th>Status</th>
+                            <th>Note author</th>
+                            <th>Note accpetor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +34,14 @@ class Liste extends React.Component {
                                 <td>{task.description}</td>
                                 <td>{task.price}</td>
                                 <td>{task.status}</td>
+                                <td>{
+                                    task.status !== 'Completed' || task.note_author === -1 ?
+                                        <p>Not noted yet</p> : <p>{task.note_author}</p>
+                                }</td>
+                                <td>{
+                                    task.status !== 'Completed' ||  task.note_acceptor === -1 ?
+                                        <p>Not noted yet</p> : <p>{task.note_acceptor}</p> 
+                                }</td>
                                 {
                                     token && token !== "" && token !== undefined ?
                                     <td>
@@ -42,6 +52,7 @@ class Liste extends React.Component {
                                         }
                                     </td> : null
                                 }
+                                
                             </tr> : null
                         ))}
                     </tbody>
