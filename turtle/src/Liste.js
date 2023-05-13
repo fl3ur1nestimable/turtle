@@ -23,6 +23,7 @@ class Liste extends React.Component {
                             <th>Status</th>
                             <th>Note author</th>
                             <th>Note accpetor</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,10 +46,9 @@ class Liste extends React.Component {
                                 {
                                     token && token !== "" && token !== undefined ?
                                     <td>
-                                        {
-                                            task.status === 'Posted' ?
+                                        {       task.status === 'Posted' ?
                                                 <button onClick={() => this.acceptation(task)}>Accepter</button>
-                                                : null
+                                            : null
                                         }
                                     </td> : null
                                 }

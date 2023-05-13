@@ -59,17 +59,39 @@ def acceptTask(accpetor, task_id):
     conn.commit()
     conn.close()
 
-
-def completeTask(author, acceptor, task_id):
+def getAcceptor(task_id):
     conn = sqlite3.connect('./database.db')
     c = conn.cursor()
-    c.execute('''INSERT INTO completed (task_id, author, acceptor) VALUES (?, ?, ?)''',
-              (task_id, author, acceptor))
-    c.execute('''DELETE FROM accepted WHERE task_id = ?''', (task_id,))
+    c.execute('''SELECT acceptor FROM accepted WHERE task_id = ?''', (task_id,))
+    acceptor = c.fetchone()[0]
+    conn.commit()
+    conn.close()
+    return acceptor
+    
+
+def completeTask(author,task_id):
+    conn = sqlite3.connect('./database.db')
+    c = conn.cursor()
+    c.execute('''INSERT INTO completed (author, task_id, acceptor) VALUES (?, ?, ?)''',
+                (author, task_id, getAcceptor(task_id)))
     c.execute('''UPDATE tasks SET status = 'Completed' WHERE id = ?''', (task_id,))
     conn.commit()
     conn.close()
 
+def noteTaskPosted(task_id, note):
+    print(task_id, note)
+    conn = sqlite3.connect('./database.db')
+    c = conn.cursor()
+    c.execute('''UPDATE tasks SET note_author = ? WHERE id = ?''', (note, task_id,))
+    conn.commit()
+    conn.close()
+    
+def noteTaskAccepted(task_id, note):
+    conn = sqlite3.connect('./database.db')
+    c = conn.cursor()
+    c.execute('''UPDATE tasks SET note_acceptor = ? WHERE id = ?''', (note, task_id,))
+    conn.commit()
+    conn.close()
 
 createUsers()
 createTasks()

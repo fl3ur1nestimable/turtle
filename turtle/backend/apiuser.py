@@ -46,7 +46,7 @@ def getUserPosted(username):
     datatosend = []
     for task in tasks:
         datatosend.append({'id': task[0], 'author': task[1], 'title': task[2],
-                          'description': task[3], 'price': task[4], 'status': task[5]})
+                          'description': task[3], 'price': task[4], 'status': task[7],'note':task[5]})
     conn.commit()
     conn.close()
     return datatosend
@@ -61,7 +61,7 @@ def getUserAccepted(username):
     datatosend = []
     for task in tasks:
         datatosend.append({'id': task[0], 'author': task[1], 'title': task[2],
-                          'description': task[3], 'price': task[4], 'status': task[5]})
+                          'description': task[3], 'price': task[4], 'status': task[7],'note':task[6]})
     conn.commit()
     conn.close()
     return datatosend

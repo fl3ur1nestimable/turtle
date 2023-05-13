@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState} from 'react';
 import './profil.css';
 import axios from "axios";
@@ -7,8 +7,9 @@ function Profil(props) {
   const [username, setUsername] = useState('');
   const [posted, setPosted] = useState([]);
   const [accepted, setAccepted] = useState([]);
-  const [note, setNote] = useState('0');
+  //const [noteP, setNote] = useState('0');
 
+  useEffect(() => {
     function getData() {
       axios({
         method: "GET",
@@ -22,7 +23,6 @@ function Profil(props) {
           res.access_token && props.setToken(res.access_token)
           setUsername(res.username)
           setPosted(res.posted)
-          console.log(res.posted)
           setAccepted(res.accepted)
         }).catch((error) => {
           if (error.response) {
@@ -32,8 +32,88 @@ function Profil(props) {
           }
         })
     }
-    getData()
+    getData();
+  },[]);
 
+  const noteTaskPosted = (id, note) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/notePost",
+      headers: {
+        Authorization: 'Bearer ' + props.token
+      },
+      data: {
+        task_id: id,
+        note: note
+      }
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Note posted")
+        }
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        }
+      }
+      );
+  }
+
+  const noteTaskAccepted = (id, note) => { 
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/noteAccept",
+      headers: {
+        Authorization: 'Bearer ' + props.token
+      },
+      data: {
+        task_id: id,
+        note: note
+      }
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Note posted")
+        }
+      }
+      ).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        }
+      }
+      );
+  }
+
+  const completeTask = (id) => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/complete",
+      headers: {
+        Authorization: 'Bearer ' + props.token
+      },
+      data: {
+        task_id: id
+      }
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Task completed");
+          window.location.reload();
+        }
+      }
+      ).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        }
+      }
+      );
+  }
 
   return (
     <div>
@@ -49,6 +129,7 @@ function Profil(props) {
             <th>Price</th>
             <th>Status</th>
             <th>Note</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -61,9 +142,20 @@ function Profil(props) {
               <td>
                 {task.status === 'Completed' ? (
                   <>
-                    <input type="range" min="0" max="5" step="1" defaultValue="0" onChange={(event) => { setNote(event.target.value) }}></input>
-                    <p>{note}</p>
+                    <button onClick={() => noteTaskPosted(task.id, 0)}>0</button>
+                    <button onClick={() => noteTaskPosted(task.id, 1)}>1</button>
+                    <button onClick={() => noteTaskPosted(task.id, 2)}>2</button>
+                    <button onClick={() => noteTaskPosted(task.id, 3)}>3</button>
+                    <button onClick={() => noteTaskPosted(task.id, 4)}>4</button>
+                    <button onClick={() => noteTaskPosted(task.id, 5)}>5</button>
                   </>
+                ) : (
+                  <p>Activity not completed</p>
+                )}
+              </td>
+              <td>
+                {task.status === 'Accepted' ? (
+                  <button onClick={() => completeTask(task.id)}>Complete</button>
                 ) : (
                   <p>Activity not completed</p>
                 )}
@@ -81,6 +173,7 @@ function Profil(props) {
             <th>Description</th>
             <th>Price</th>
             <th>Status</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody>
@@ -91,6 +184,13 @@ function Profil(props) {
               <td>{task.description}</td>
               <td>{task.price}</td>
               <td>{task.status}</td>
+              {
+                task.status === 'Completed' ? 
+                <td>
+                  <input type="range" min="0" max="5" step="1" defaultValue="0" onChange={(event) => {noteTaskAccepted(task.id,event.target.value)}}></input>
+                  <p>{task.note}</p>
+                </td> : <td>Activity not completed</td>
+              }
             </tr>
           ))}
         </tbody>
