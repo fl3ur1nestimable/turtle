@@ -2,6 +2,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			}
+		],
+		"name": "accepteTransaction",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "_demandeur",
 				"type": "address"
@@ -12,71 +25,14 @@
 				"type": "string"
 			}
 		],
-		"name": "creerTransaction",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transactionId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "demandeur",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "accepteur",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			}
-		],
-		"name": "NouvelleTransaction",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transactionId",
-				"type": "uint256"
-			}
-		],
-		"name": "TransactionValidee",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_transactionId",
-				"type": "uint256"
-			}
-		],
-		"name": "validerTransaction",
+		"name": "creeTransaction",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "getNombreTransactions",
+		"name": "getCount",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -84,38 +40,39 @@
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_transactionId",
-				"type": "uint256"
-			}
-		],
-		"name": "getTransaction",
+		"inputs": [],
+		"name": "getTransactions",
 		"outputs": [
 			{
-				"internalType": "address",
+				"components": [
+					{
+						"internalType": "address",
+						"name": "demandeur",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "accepteur",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "valide",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct MiseEnRelation.Transaction[]",
 				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

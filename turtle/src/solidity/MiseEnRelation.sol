@@ -11,34 +11,25 @@ contract MiseEnRelation {
     
     Transaction[] public transactions;
     
-    event NouvelleTransaction(uint transactionId, address demandeur, address accepteur, string description);
-    event TransactionValidee(uint transactionId);
-    
-    function creerTransaction(address _demandeur, string memory _description) public {
-        uint transactionId = transactions.length;
-        transactions.push(Transaction(_demandeur, msg.sender, _description, false));
-        
-        emit NouvelleTransaction(transactionId,_demandeur,msg.sender, _description);
+    function creeTransaction(address _demandeur,string memory _description) public{
+        //create a transaction with no accepteur
+        Transaction memory transaction = Transaction(_demandeur, address(0), _description, false);
+        transactions.push(transaction);
     }
-    
-    function validerTransaction(uint _transactionId) public {
-        require(_transactionId < transactions.length, "Transaction non valide");
-        require(msg.sender == transactions[_transactionId].demandeur, "Vous n'etes pas autorise a valider cette transaction");
-        require(!transactions[_transactionId].valide, "La transaction a deja ete validee");
-        
-        transactions[_transactionId].valide = true;
-        
-        emit TransactionValidee(_transactionId);
+
+    function accepteTransaction(uint _index) public{
+        //accept a transaction
+        transactions[_index].accepteur = msg.sender;
+        transactions[_index].valide = true;
     }
-    
-    function getNombreTransactions() public view returns(uint) {
+
+    function getTransactions() public view returns(Transaction[] memory){
+        //return all transactions
+        return transactions;
+    }
+
+    function getCount() public view returns(uint){
+        //return the number of transactions
         return transactions.length;
-    }
-    
-    function getTransaction(uint _transactionId) public view returns(address, address, string memory, bool) {
-        require(_transactionId < transactions.length, "Transaction non valide");
-        
-        Transaction memory transaction = transactions[_transactionId];
-        return (transaction.demandeur, transaction.accepteur, transaction.description, transaction.valide);
     }
 }

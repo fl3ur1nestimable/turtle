@@ -4,7 +4,7 @@ import Web3 from 'web3';
 import Form from './Form';
 import Liste from './Liste';
 import axios from 'axios';
-import contract from './Web3';
+import data from './data.json';
 
 function Home(props) {
     const [Author, setAuthor] = useState('');
@@ -91,9 +91,15 @@ function Home(props) {
                 console.log(response);
                 updateList();
                 try{          
-                    const accounts = await web3.eth.getAccounts();
-                    //const transaction = await contract.methods.creerTransation(response.data.task.author, response.data.task.description).send({from: accounts[0]});
-                    //console.log(transaction.transactionHash)
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.requestAccounts();
+                    const account = accounts[0];
+                    console.log(account);
+                    const contractAddress = '0xcb94aCD0B769c4bA7AC6FC6aA612071EE8c970e3';
+                    const contractABI = data;
+                    const contract = new web3.eth.Contract(contractABI, contractAddress);
+                    console.log(response.data);
+                    await contract.methods.getCount().call();
                 }
                 catch(error){
                     console.log(error);
@@ -124,6 +130,7 @@ function Home(props) {
         if(token && token !== "" && token !== undefined) {
             getUser();
         }
+
     }, [token]);
 
 
