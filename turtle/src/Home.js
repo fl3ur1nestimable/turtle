@@ -90,11 +90,10 @@ function Home(props) {
             .then(async response => {
                 console.log(response);
                 updateList();
-                try{
-
-                    const accounts = await web3.eth.requestAccounts();
-                    const transaction = await contract.methods.creerTransation(response.data.task.author, response.data.task.description).send({from: accounts[0]});
-                    console.log(transaction.transactionHash)
+                try{          
+                    const accounts = await web3.eth.getAccounts();
+                    //const transaction = await contract.methods.creerTransation(response.data.task.author, response.data.task.description).send({from: accounts[0]});
+                    //console.log(transaction.transactionHash)
                 }
                 catch(error){
                     console.log(error);
