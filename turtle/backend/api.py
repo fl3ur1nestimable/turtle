@@ -57,7 +57,8 @@ def accept_task():
     acceptor = data['acceptor']
     task_id = data['task_id']
     acceptTask(acceptor, task_id)
-    return jsonify({'message': 'Task accepted'}), 200
+    task = getTask(task_id)
+    return jsonify({'message': 'Task accepted', 'task': task}), 200
 
 @app.route('/complete', methods=['POST'])
 @jwt_required()

@@ -92,6 +92,15 @@ def noteTaskAccepted(task_id, note):
     c.execute('''UPDATE tasks SET note_acceptor = ? WHERE id = ?''', (note, task_id,))
     conn.commit()
     conn.close()
+    
+def getTask(task_id):
+    conn = sqlite3.connect('./database.db')
+    c = conn.cursor()
+    c.execute('''SELECT * FROM tasks WHERE id = ?''', (task_id,))
+    task = c.fetchone()
+    conn.commit()
+    conn.close()
+    return task
 
 createUsers()
 createTasks()

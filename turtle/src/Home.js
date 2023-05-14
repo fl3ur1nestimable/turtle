@@ -1,8 +1,10 @@
 import './Home.css';
 import React, { useEffect, useState } from 'react';
+import Web3 from 'web3';
 import Form from './Form';
 import Liste from './Liste';
 import axios from 'axios';
+import contract from './Web3';
 
 function Home(props) {
     const [Author, setAuthor] = useState('');
@@ -12,6 +14,7 @@ function Home(props) {
     const [tasks, setTasks] = useState([]);
     const token = props.token;
     const [user, setUser] = useState('');
+    const web3 = new Web3(window.ethereum);
 
     const addItem = (title, description, price) => {
         console.log(title, description, price);
@@ -84,9 +87,18 @@ function Home(props) {
                 acceptor: user
             }
         })
-            .then(response => {
+            .then(async response => {
                 console.log(response);
                 updateList();
+                try{
+
+                    const accounts = await web3.eth.requestAccounts();
+                    const transaction = await contract.methods.creerTransation(response.data.task.author, response.data.task.description).send({from: accounts[0]});
+                    console.log(transaction.transactionHash)
+                }
+                catch(error){
+                    console.log(error);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
