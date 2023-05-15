@@ -4,7 +4,7 @@ import Web3 from 'web3';
 import Form from './Form';
 import Liste from './Liste';
 import axios from 'axios';
-import data from './data.json';
+import abi from './abi.json';
 
 function Home(props) {
     const [Author, setAuthor] = useState('');
@@ -14,10 +14,7 @@ function Home(props) {
     const [tasks, setTasks] = useState([]);
     const token = props.token;
     const [user, setUser] = useState('');
-    const web3 = new Web3(window.ethereum);
-
     const addItem = (title, description, price) => {
-        console.log(title, description, price);
         if (!title || !description || !price) return;
         setAuthor([Author, user]);
         setTitle([Title, title]);
@@ -38,9 +35,21 @@ function Home(props) {
                 'Authorization': 'Bearer ' + token
             }
         })
-            .then(response => {
+            .then(async response => {
                 console.log(response);
                 updateList();
+                try{           
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.requestAccounts();
+                    const account = accounts[0];
+                    const contractAddress = '0x8b580ef98a707532595Be59639De7ab015698f87';
+                    const contractABI = abi;
+                    const contract = new web3.eth.Contract(contractABI, contractAddress);
+                    contract.methods.createTransaction(tasks.length).send({from: account});
+                }
+                catch(error){
+                    console.log(error);
+                }
             })
             .catch(error => {
                 if (error.response) {
@@ -78,7 +87,6 @@ function Home(props) {
     }
 
     const acceptTask = (id) => {
-        console.log(id);
         axios({
             method: 'post',
             url: 'http://localhost:5000/accept',
@@ -88,22 +96,19 @@ function Home(props) {
             }
         })
             .then(async response => {
-                console.log(response);
                 updateList();
-                try{          
+                try {
                     const web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
-                    console.log(account);
-                    const contractAddress = '0xcb94aCD0B769c4bA7AC6FC6aA612071EE8c970e3';
-                    const contractABI = data;
+                    const contractAddress = '0x8b580ef98a707532595Be59639De7ab015698f87';
+                    const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
-                    console.log(response.data);
-                    await contract.methods.getCount().call();
-                }
-                catch(error){
+                    contract.methods.createTransaction(id).send({from: account});
+                } catch (error) {
                     console.log(error);
                 }
+
             })
             .catch(error => {
                 console.error('Error:', error);

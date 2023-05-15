@@ -1,11 +1,11 @@
 import Web3 from 'web3';
-import data from './data.json';
+import abi from './abi.json';
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");;
 // Adresse du contrat
 const contractAddress = '0xd9145CCE52D386f254917e481eB44e9943F39138';
 //ABI du contrat
-const contractABI = data;
+const contractABI = abi;
 // Instance du contrat
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 // set provider for all later instances to use
