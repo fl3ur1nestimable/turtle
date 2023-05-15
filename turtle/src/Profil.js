@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState} from 'react';
 import './profil.css';
 import axios from "axios";
-import contract from "./Web3";
+import Web3 from "./Web3";
 
 function Profil(props) {
   const [username, setUsername] = useState('');
