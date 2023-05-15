@@ -21,10 +21,17 @@ Ouvrez un terminal et accédez au répertoire `turtle/backend` :
 cd turtle/backend
 ```	
 
+Creer la base de donnée (toujours dans le dossier backend) :
+
+```shell
+python3 apidb.py
+```
+
+
 lancer le serveur flask avec la commande suivante :
 
 ```shell
-python run.py
+python3 run.py
 ``` 
 
 vous pouvez désormais lancer l'application dans le répertoire `turtle`, dans un deuxieme terminal :
