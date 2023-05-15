@@ -24,8 +24,14 @@ cd turtle/backend
 lancer le serveur flask avec la commande suivante :
 
 ```shell
-npm start
+python run.py
 ``` 
+
+vous pouvez désormais lancer l'application dans le répertoire `turtle` :
+
+```shell
+npm start
+```
 
 Cela lancera l'application dans votre navigateur par défaut. Vous pourrez alors interagir avec l'interface utilisateur.
 
