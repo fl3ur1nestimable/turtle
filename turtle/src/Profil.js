@@ -121,7 +121,7 @@ function Profil(props) {
   return (
     <div id= "profil_body">
       <h1>Profil de {username}</h1>
-      <div tables>
+      <div>
       <div id = "posted_table">
       <h2>Posted Tasks</h2>
       <table>
@@ -153,15 +153,15 @@ function Profil(props) {
                     <button onClick={() => noteTaskPosted(task.id, 5)}>5</button>
                   </>
                 ) : (
-                  <p>Activity not completed</p>
+                  <p>Task not completed</p>
                 )}
               </td>
               <td>
                 {task.status === 'Accepted' ? (
                   <button onClick={() => completeTask(task.id)}>Complete</button>
-                ) : (
-                  <p>Activity not completed</p>
-                )}
+                ) : 
+                  task.status === 'Completed' ? (<p>Task completed</p>) : (<p>Task not accepted</p>)
+                  }
               </td>
             </tr>
           ))}
@@ -193,9 +193,15 @@ function Profil(props) {
               {
                 task.status === 'Completed' ? 
                 <td>
-                  <input type="range" min="0" max="5" step="1" defaultValue="0" onChange={(event) => {noteTaskAccepted(task.id,event.target.value)}}></input>
-                  <p>{task.note}</p>
-                </td> : <td>Activity not completed</td>
+                  <>
+                    <button onClick={() => noteTaskAccepted(task.id, 0)}>0</button>
+                    <button onClick={() => noteTaskAccepted(task.id, 1)}>1</button>
+                    <button onClick={() => noteTaskAccepted(task.id, 2)}>2</button>
+                    <button onClick={() => noteTaskAccepted(task.id, 3)}>3</button>
+                    <button onClick={() => noteTaskAccepted(task.id, 4)}>4</button>
+                    <button onClick={() => noteTaskAccepted(task.id, 5)}>5</button>
+                  </>
+                </td> : <td>Task not completed</td>
               }
             </tr>
           ))}
