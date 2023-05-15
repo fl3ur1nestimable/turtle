@@ -5,10 +5,10 @@ import Form from './Form';
 import Liste from './Liste';
 import axios from 'axios';
 import abi from './abi.json';
-import contractAddress from './contractadress.json';
+import adress from './adress.json';
 
 function Home(props) {
-    const address = contractAddress.address;
+    const adr = adress.address;
     const [Author, setAuthor] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
@@ -41,11 +41,11 @@ function Home(props) {
                 console.log(response);
                 updateList();
                 try{           
-                    const web3 = new Web3(window.euthereum);
-                    const accounts = await web3.eth.getAccounts();
+                    const web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
                     console.log(account);
-                    const contractAddress = address;
+                    const contractAddress = adr;
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
                     contract.methods.createTransaction(description,price).send({from: account, value: web3.utils.toWei(price, 'wei')});
@@ -104,10 +104,10 @@ function Home(props) {
                     const web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
-                    const contractAddress = address;
+                    const contractAddress = adr;
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
-                    contract.methods.acceptTransaction(id).send({from: account});
+                    contract.methods.acceptTransaction(id-1).send({from: account});
                 } catch (error) {
                     console.log(error);
                 }

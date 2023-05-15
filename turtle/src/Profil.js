@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useState} from 'react';
 import './profil.css';
 import axios from "axios";
-import Web3 from "./Web3";
+import Web3 from "web3";
+import abi from "./abi.json";
+import adress from "./adress.json";
 
 function Profil(props) {
+  const adr = adress.address;
   const [username, setUsername] = useState('');
   const [posted, setPosted] = useState([]);
   const [accepted, setAccepted] = useState([]);
@@ -102,10 +105,20 @@ function Profil(props) {
         task_id: id
       }
     })
-      .then((response) => {
+      .then(async response => {
         if (response.status === 200) {
           console.log("Task completed");
-          window.location.reload();
+          try {
+            const web3 = new Web3(window.ethereum);
+            const accounts = await web3.eth.requestAccounts();
+            const account = accounts[0];
+            const contract = new web3.eth.Contract(abi, adr);
+            console.log(id);
+            await contract.methods.completeTransaction(id-1).send({ from: account });
+            window.location.reload();
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
       ).catch((error) => {
@@ -125,19 +138,16 @@ function Profil(props) {
       <div id = "posted_table">
       <h2>Posted Tasks</h2>
       <table>
-      <thead>
+        <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
             <th>Status</th>
             <th>Note</th>
-            <th>Your note</th>
-            <th>Acceptor note</th>
-            <th></th>
+            <th>Action</th>
           </tr>
         </thead>
-
         <tbody>
           {posted.map((task, index) => (
             <tr key={index}>
@@ -159,32 +169,23 @@ function Profil(props) {
                   <p>Task not completed</p>
                 )}
               </td>
-              <td>{
-                task.status !== 'Completed' || task.note_author === -1 ?
-                    <p>Not noted yet</p> : <p>{task.note_author}</p> 
-               }</td>
-              <td>{
-                    task.status !== 'Completed' ||  task.note_acceptor === -1 ?
-                      <p>Not noted yet</p> : <p>{task.note_acceptor}</p> 
-                    }</td>
               <td>
                 {task.status === 'Accepted' ? (
                   <button onClick={() => completeTask(task.id)}>Complete</button>
-                ) : (
-                  <p>Activity not accepted or already completed</p>
-                )}
+                ) : 
+                  task.status === 'Completed' ? (<p>Task completed</p>) : (<p>Task not accepted</p>)
+                  }
               </td>
             </tr>
           ))}
         </tbody>
-
       
       </table>
       </div>
       <div id ="accepted_table">
       <h2>Accepted tasks</h2>
       <table>
-      <thead>
+        <thead>
           <tr>
             <th>Author</th>
             <th>Title</th>
@@ -203,7 +204,8 @@ function Profil(props) {
               <td>{task.price}</td>
               <td>{task.status}</td>
               {
-                task.status === 'Completed' ? (
+                task.status === 'Completed' ? 
+                <td>
                   <>
                     <button onClick={() => noteTaskAccepted(task.id, 0)}>0</button>
                     <button onClick={() => noteTaskAccepted(task.id, 1)}>1</button>
@@ -212,9 +214,7 @@ function Profil(props) {
                     <button onClick={() => noteTaskAccepted(task.id, 4)}>4</button>
                     <button onClick={() => noteTaskAccepted(task.id, 5)}>5</button>
                   </>
-                ) : (
-                  <p>Activity not completed</p>
-                )
+                </td> : <td>Task not completed</td>
               }
             </tr>
           ))}
