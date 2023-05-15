@@ -121,7 +121,7 @@ function Profil(props) {
   return (
     <div id= "profil_body">
       <h1>Profil de {username}</h1>
-      <div tables>
+      <div>
       <div id = "posted_table">
       <h2>Posted Tasks</h2>
       <table>
@@ -156,7 +156,7 @@ function Profil(props) {
                     <button onClick={() => noteTaskPosted(task.id, 5)}>5</button>
                   </>
                 ) : (
-                  <p>Activity not completed</p>
+                  <p>Task not completed</p>
                 )}
               </td>
               <td>{

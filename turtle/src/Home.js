@@ -5,8 +5,10 @@ import Form from './Form';
 import Liste from './Liste';
 import axios from 'axios';
 import abi from './abi.json';
+import contractAddress from './contractAddress.json';
 
 function Home(props) {
+    const address = contractAddress.address;
     const [Author, setAuthor] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
@@ -34,15 +36,16 @@ function Home(props) {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        })
+        })              
             .then(async response => {
                 console.log(response);
                 updateList();
                 try{           
-                    const web3 = new Web3(window.ethereum);
-                    const accounts = await web3.eth.requestAccounts();
+                    const web3 = new Web3(window.euthereum);
+                    const accounts = await web3.eth.getAccounts();
                     const account = accounts[0];
-                    const contractAddress = '0x34461696AA94A93175Af0b961Ee9E3a42907f4c8';
+                    console.log(account);
+                    const contractAddress = address;
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
                     contract.methods.createTransaction(description,price).send({from: account, value: web3.utils.toWei(price, 'wei')});
@@ -101,7 +104,7 @@ function Home(props) {
                     const web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
-                    const contractAddress = '0x34461696AA94A93175Af0b961Ee9E3a42907f4c8';
+                    const contractAddress = address;
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
                     contract.methods.acceptTransaction(id).send({from: account});
@@ -144,6 +147,7 @@ function Home(props) {
         <div className="App">
             <nav>
                 <div>
+                    <div>
                     {
                         !token && token !== "" && token !== undefined ?
                             <button onClick={
@@ -167,11 +171,13 @@ function Home(props) {
                                 }
                             }>Profil</button>
                     }
-
+                    </div>
+                    <div>
                     {
                         user && user !== "" && user !== undefined ?
                             'Welcome ' + user : null
                     }
+                    </div>
                 </div>
             </nav>
             <h1>Bookstore</h1>
@@ -188,6 +194,7 @@ function Home(props) {
             </div>
         </div>
     );
+
 }
 
 export default Home;
