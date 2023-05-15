@@ -50,10 +50,12 @@ function Register() {
 
     return (
         <div className="Register">
-            <input type="text" placeholder="Username" onChange={handleUsernameChange} />
-            <input type="text" placeholder="Email" onChange={handleEmailChange} />
-            <input type="password" placeholder="Password" onChange={handlePasswordChange} />
-            <button onClick={register}>Register</button>
+            <h1>TaskTurtle</h1>
+            <input className='regi' type="text" placeholder="Username" onChange={handleUsernameChange} />
+            <input className='regi' type="text" placeholder="Email" onChange={handleEmailChange} />
+            <input className='regi' type="password" placeholder="Password" onChange={handlePasswordChange} />
+            <button className='regb' onClick={register}>Register</button>
+            <button className='rethome' onClick={() => window.location.href = "/"}>HomePage</button>
         </div>
     );
 }

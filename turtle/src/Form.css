@@ -3,14 +3,30 @@
     height: 150px;
 }
 
-#price{
-    width: 20px;
+.formi{
+    padding: 14px 20px;
+    margin: 4px 4px;
+    border: 2px solid black;
+    border-radius: 4px;
 }
 
-button{
+.formb{
     background-color: #4CAF50;
     color: white;
-    border-radius: 3px;
-    border:2px solid black;
+    padding: 14px 20px;
+    margin: 4px 4px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.formb:hover{
+    background-color: #45a049;
+}
+
+.formt{
+    border: 2px solid black;
+    border-radius: 4px;
+    
 }
 

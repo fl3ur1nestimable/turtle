@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Liste.css';
 class Liste extends React.Component {
     componentDidMount() {
         this.props.updateList();
@@ -47,7 +47,7 @@ class Liste extends React.Component {
                                     token && token !== "" && token !== undefined ?
                                     <td>
                                         {       task.status === 'Posted' ?
-                                                <button onClick={() => this.acceptation(task)}>Accepter</button>
+                                                <button className='btnli' onClick={() => this.acceptation(task)}>Accepter</button>
                                             : null
                                         }
                                     </td> : null

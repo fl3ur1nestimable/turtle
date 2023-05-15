@@ -56,3 +56,30 @@ th {
   color: white;
 }
 
+.btnh{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 8px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnh:hover{
+  background-color: #45a049;
+}
+
+h1{
+  text-decoration: solid;
+  text-align: center;
+  font-size: 50px;
+}
+
+body{
+  background: linear-gradient(to bottom,#2caeeb  0%, #fffabb 100%);
+}
+
+body, html {
+  min-height: 100%;
+}

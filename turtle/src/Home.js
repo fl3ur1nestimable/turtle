@@ -150,22 +150,22 @@ function Home(props) {
                     <div>
                     {
                         !token && token !== "" && token !== undefined ?
-                            <button onClick={
+                            <button className='btnh' onClick={
                                 () => {
                                     window.location.href = '/login';
                                 }
                             }>Login</button>
-                            : <button onClick={logout}>Logout</button>
+                            : <button className='btnh' onClick={logout}>Logout</button>
 
                     }
                     {
                         !token && token !== "" && token !== undefined ?
-                            <button onClick={
+                            <button className='btnh' onClick={
                                 () => {
                                     window.location.href = '/register';
                                 }
                             }>Register</button>
-                            : <button onClick={
+                            : <button className='btnh' onClick={
                                 () => {
                                     window.location.href = '/profil';
                                 }
@@ -180,7 +180,7 @@ function Home(props) {
                     </div>
                 </div>
             </nav>
-            <h1>Bookstore</h1>
+            <h1>TaskTurtle</h1>
             <div id="bookstore">
                 {token && token !== "" && token !== undefined ? (
                     <>

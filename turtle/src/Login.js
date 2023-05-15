@@ -46,9 +46,11 @@ function Login(props) {
 
   return (
     <div className="Login">
-      <input type="text" placeholder="Email" onChange={handleUsernameChange} />
-      <input type="password" placeholder="Password" onChange={handlePasswordChange} />
-      <button onClick={login}>Login</button>
+      <h1>TaskTurtle</h1>
+      <input className='logi' type="text" placeholder="Email" onChange={handleUsernameChange} />
+      <input className='logi' type="password" placeholder="Password" onChange={handlePasswordChange} />
+      <button className='btnl' onClick={login}>Login</button>
+      <button className='rethome' onClick={() => window.location.href = "/"}>HomePage</button>
     </div>
   );
 }

@@ -1,0 +1,28 @@
+.Register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.regi{
+    padding: 14px 20px;
+    margin: 8px 8px;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
+.regb{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 8px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.regb:hover{
+    background-color: #45a049;
+}

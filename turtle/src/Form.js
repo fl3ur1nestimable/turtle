@@ -1,5 +1,6 @@
 
 import React from 'react';
+import './Form.css';
 
 class Form extends React.Component {
 
@@ -49,13 +50,13 @@ class Form extends React.Component {
   render() {
     return (
       <div id = "body_form">
-        <div>
-        <input size = "30" type="text" value={this.state.title} onChange={this.handleTitleChange} placeholder="title"/>
-        <input type="text" value={this.state.price} onChange={this.handlePriceChange} placeholder="price"/>
-        <button onClick={this.handleAddItem}>Add</button>
+        <div className='row1'>
+        <input className='formi' size = "30" type="text" value={this.state.title} onChange={this.handleTitleChange} placeholder="title"/>
+        <input className='formi' type="text" value={this.state.price} onChange={this.handlePriceChange} placeholder="price"/>
+        <button className='formb' onClick={this.handleAddItem}>Add</button>
         </div>
-        <div>
-        <textarea value={this.state.description} onChange={this.handleDescriptionChange} rows="5" cols="50" maxLength="500" placeholder="description"></textarea>
+        <div className='row2'>
+        <textarea className='formt' value={this.state.description} onChange={this.handleDescriptionChange} rows="5" cols="50" maxLength="500" placeholder="description"></textarea>
         </div>
         
       </div>

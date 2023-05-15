@@ -133,7 +133,7 @@ function Profil(props) {
 
   return (
     <div id= "profil_body">
-      <h1>Profil de {username}</h1>
+      <h1>{username}'s profile</h1>
       <div>
       <div id = "posted_table">
       <h2>Posted Tasks</h2>
@@ -158,12 +158,12 @@ function Profil(props) {
               <td>
                 {task.status === 'Completed' ? (
                   <>
-                    <button onClick={() => noteTaskPosted(task.id, 0)}>0</button>
-                    <button onClick={() => noteTaskPosted(task.id, 1)}>1</button>
-                    <button onClick={() => noteTaskPosted(task.id, 2)}>2</button>
-                    <button onClick={() => noteTaskPosted(task.id, 3)}>3</button>
-                    <button onClick={() => noteTaskPosted(task.id, 4)}>4</button>
-                    <button onClick={() => noteTaskPosted(task.id, 5)}>5</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 0)}>0</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 1)}>1</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 2)}>2</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 3)}>3</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 4)}>4</button>
+                    <button className="minibtn" onClick={() => noteTaskPosted(task.id, 5)}>5</button>
                   </>
                 ) : (
                   <p>Task not completed</p>
@@ -171,7 +171,7 @@ function Profil(props) {
               </td>
               <td>
                 {task.status === 'Accepted' ? (
-                  <button onClick={() => completeTask(task.id)}>Complete</button>
+                  <button className="btncomplete" onClick={() => completeTask(task.id)}>Complete</button>
                 ) : 
                   task.status === 'Completed' ? (<p>Task completed</p>) : (<p>Task not accepted</p>)
                   }
@@ -207,12 +207,12 @@ function Profil(props) {
                 task.status === 'Completed' ? 
                 <td>
                   <>
-                    <button onClick={() => noteTaskAccepted(task.id, 0)}>0</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 1)}>1</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 2)}>2</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 3)}>3</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 4)}>4</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 5)}>5</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 0)}>0</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 1)}>1</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 2)}>2</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 3)}>3</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 4)}>4</button>
+                    <button className="minibtn" onClick={() => noteTaskAccepted(task.id, 5)}>5</button>
                   </>
                 </td> : <td>Task not completed</td>
               }
@@ -224,7 +224,7 @@ function Profil(props) {
       </div>
       </div>
       <div id = "home">
-      <button onClick={() => window.location.replace('/')}>HomePage</button>
+      <button className="rethome" onClick={() => window.location.replace('/')}>HomePage</button>
       </div>
     </div>
   );
