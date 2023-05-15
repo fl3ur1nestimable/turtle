@@ -125,19 +125,16 @@ function Profil(props) {
       <div id = "posted_table">
       <h2>Posted Tasks</h2>
       <table>
-      <thead>
+        <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
             <th>Status</th>
             <th>Note</th>
-            <th>Your note</th>
-            <th>Acceptor note</th>
-            <th></th>
+            <th>Action</th>
           </tr>
         </thead>
-
         <tbody>
           {posted.map((task, index) => (
             <tr key={index}>
@@ -159,32 +156,23 @@ function Profil(props) {
                   <p>Task not completed</p>
                 )}
               </td>
-              <td>{
-                task.status !== 'Completed' || task.note_author === -1 ?
-                    <p>Not noted yet</p> : <p>{task.note_author}</p> 
-               }</td>
-              <td>{
-                    task.status !== 'Completed' ||  task.note_acceptor === -1 ?
-                      <p>Not noted yet</p> : <p>{task.note_acceptor}</p> 
-                    }</td>
               <td>
                 {task.status === 'Accepted' ? (
                   <button onClick={() => completeTask(task.id)}>Complete</button>
                 ) : (
-                  <p>Activity not accepted or already completed</p>
+                  <p>Activity not completed</p>
                 )}
               </td>
             </tr>
           ))}
         </tbody>
-
       
       </table>
       </div>
       <div id ="accepted_table">
       <h2>Accepted tasks</h2>
       <table>
-      <thead>
+        <thead>
           <tr>
             <th>Author</th>
             <th>Title</th>
@@ -203,18 +191,11 @@ function Profil(props) {
               <td>{task.price}</td>
               <td>{task.status}</td>
               {
-                task.status === 'Completed' ? (
-                  <>
-                    <button onClick={() => noteTaskAccepted(task.id, 0)}>0</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 1)}>1</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 2)}>2</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 3)}>3</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 4)}>4</button>
-                    <button onClick={() => noteTaskAccepted(task.id, 5)}>5</button>
-                  </>
-                ) : (
-                  <p>Activity not completed</p>
-                )
+                task.status === 'Completed' ? 
+                <td>
+                  <input type="range" min="0" max="5" step="1" defaultValue="0" onChange={(event) => {noteTaskAccepted(task.id,event.target.value)}}></input>
+                  <p>{task.note}</p>
+                </td> : <td>Activity not completed</td>
               }
             </tr>
           ))}
