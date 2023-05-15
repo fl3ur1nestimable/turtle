@@ -126,10 +126,10 @@ function Profil(props) {
   }
 
   return (
-    <div>
-      <h1>Profil</h1>
-      <p>Welcome back {username}</p>
-
+    <div id= "profil_body">
+      <h1>Profil de {username}</h1>
+      <div tables>
+      <div id = "posted_table">
       <h2>Posted Tasks</h2>
       <table>
         <thead>
@@ -173,7 +173,10 @@ function Profil(props) {
             </tr>
           ))}
         </tbody>
+      
       </table>
+      </div>
+      <div id ="accepted_table">
       <h2>Accepted tasks</h2>
       <table>
         <thead>
@@ -206,8 +209,11 @@ function Profil(props) {
         </tbody>
       </table>
 
-      <button onClick={() => window.location.replace('/')}>Back to HomePage</button>
-
+      </div>
+      </div>
+      <div id = "home">
+      <button onClick={() => window.location.replace('/')}>HomePage</button>
+      </div>
     </div>
   );
 }

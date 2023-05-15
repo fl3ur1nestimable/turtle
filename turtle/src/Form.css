@@ -1,0 +1,16 @@
+#body_form{
+    margin: 10 px;
+    height: 150px;
+}
+
+#price{
+    width: 20px;
+}
+
+button{
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 3px;
+    border:2px solid black;
+}
+

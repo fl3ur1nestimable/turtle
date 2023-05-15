@@ -22,7 +22,7 @@ class Liste extends React.Component {
                             <th>Price</th>
                             <th>Status</th>
                             <th>Note author</th>
-                            <th>Note accpetor</th>
+                            <th>Note acceptor</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

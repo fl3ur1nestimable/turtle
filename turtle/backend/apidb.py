@@ -5,7 +5,7 @@ def createTasks():
     conn = sqlite3.connect('./database.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS tasks
-                 (id integer primary key, author text not null, title text not null, description text not null, price real not null , note_author, note_acceptor, status text not null,
+                 (id integer primary key, author text not null, title text not null, description text not null, price real not null , note_author real not null, note_acceptor real not null, status text not null,
                  check (status in ('Posted', 'Accepted', 'Completed')))''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS accepted
@@ -79,7 +79,6 @@ def completeTask(author,task_id):
     conn.close()
 
 def noteTaskPosted(task_id, note):
-    print(task_id, note)
     conn = sqlite3.connect('./database.db')
     c = conn.cursor()
     c.execute('''UPDATE tasks SET note_author = ? WHERE id = ?''', (note, task_id,))

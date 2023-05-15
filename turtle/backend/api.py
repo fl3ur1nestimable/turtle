@@ -140,7 +140,8 @@ def note_post():
     data = request.get_json()
     note = data['note']
     task_id = data['task_id']
-    noteTaskPosted(note, task_id)
+    print(note, task_id,"note post")
+    noteTaskPosted(task_id, note)
     return jsonify({'message': 'Task noted'}), 200
 
 @app.route('/noteAccept', methods=['POST'])
@@ -148,7 +149,7 @@ def note_accept():
     data = request.get_json()
     note = data['note']
     task_id = data['task_id']
-    noteTaskAccepted(note, task_id)
+    noteTaskAccepted(task_id,note)
     return jsonify({'message': 'Task noted'}), 200
 
 
