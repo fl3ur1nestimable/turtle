@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState} from 'react';
 import './profil.css';
 import axios from "axios";
-import contract from "./Web3";
+import Web3 from "./Web3";
 
 function Profil(props) {
   const [username, setUsername] = useState('');
@@ -100,10 +100,19 @@ function Profil(props) {
         task_id: id
       }
     })
-      .then((response) => {
+      .then(async response => {
         if (response.status === 200) {
           console.log("Task completed");
           window.location.reload();
+          try {
+            const web3 = new Web3(window.ethereum);
+            const contract = await web3.eth.Contract(props.abi, props.address);
+            const accounts = window.eth.requestAccounts();
+            const account = accounts[0];
+            contract.methods.completeTransation(id).send({ from: account });
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
       ).catch((error) => {

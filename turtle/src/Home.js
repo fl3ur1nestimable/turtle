@@ -42,10 +42,10 @@ function Home(props) {
                     const web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
-                    const contractAddress = '0x8b580ef98a707532595Be59639De7ab015698f87';
+                    const contractAddress = '0x34461696AA94A93175Af0b961Ee9E3a42907f4c8';
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
-                    contract.methods.createTransaction(tasks.length).send({from: account});
+                    contract.methods.createTransaction(description,price).send({from: account, value: web3.utils.toWei(price, 'wei')});
                 }
                 catch(error){
                     console.log(error);
@@ -101,10 +101,10 @@ function Home(props) {
                     const web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.requestAccounts();
                     const account = accounts[0];
-                    const contractAddress = '0x8b580ef98a707532595Be59639De7ab015698f87';
+                    const contractAddress = '0x34461696AA94A93175Af0b961Ee9E3a42907f4c8';
                     const contractABI = abi;
                     const contract = new web3.eth.Contract(contractABI, contractAddress);
-                    contract.methods.createTransaction(id).send({from: account});
+                    contract.methods.acceptTransaction(id).send({from: account});
                 } catch (error) {
                     console.log(error);
                 }

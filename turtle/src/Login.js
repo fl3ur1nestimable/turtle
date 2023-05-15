@@ -1,6 +1,7 @@
 import './login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
+import Web3 from 'web3';
 
 function Login(props) {
 
@@ -29,8 +30,9 @@ function Login(props) {
       url: "http://localhost:5000/login",
       data: data
     })
-      .then((response) => {
+      .then(async response => {
         props.setToken(response.data.access_token);
+        
         window.location.href = "/";
       }).catch((error) => {
         if (error.response) {

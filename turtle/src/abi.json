@@ -36,12 +36,6 @@
 		"inputs": [
 			{
 				"indexed": true,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
 				"internalType": "address",
 				"name": "demandeur",
 				"type": "address"
@@ -51,6 +45,12 @@
 				"internalType": "string",
 				"name": "description",
 				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
 			}
 		],
 		"name": "TransactionCreated",
@@ -88,11 +88,16 @@
 				"internalType": "string",
 				"name": "_description",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
 			}
 		],
 		"name": "createTransaction",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -132,6 +137,16 @@
 				"internalType": "string",
 				"name": "description",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "accepted",
+				"type": "bool"
 			},
 			{
 				"internalType": "bool",
