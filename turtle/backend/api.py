@@ -82,7 +82,7 @@ def signup():
         return jsonify({"msg": "user_alr_exit"}), 401
     if email_exist:
         return jsonify({"msg": "mail_alr_exist"}), 401
-    pwd = generate_password_hash(data['password'], method='sha256')
+    pwd = generate_password_hash(data['password'], method='pbkdf2:sha256')
     addUser(username, email, pwd)
     return jsonify({"msg": "user_created"}), 200
 
