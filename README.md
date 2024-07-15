@@ -1,20 +1,19 @@
 
 <table>
   <tr>
-    <td><img src="Screenshots/1.png" alt="1"></td>
-    <td><img src="Screenshots/1.png" alt="2"></td>
-    <td><img src="Screenshots/1.png" alt="3"></td>
+    <td><img src="https://github.com/user-attachments/assets/6c14db2f-0252-4dae-be45-e769afe76846" alt="1"></td>
+    <td><img src="https://github.com/user-attachments/assets/9cc9b04f-0e2d-4318-a0de-747856c11e3f" alt="2"></td>
+    <td><img src="https://github.com/user-attachments/assets/8053ab7a-0e9b-4c2a-b36b-33868634e2a3" alt="3"></td>
   </tr>
   <tr>
-    <td><img src="Screenshots/1.png" alt="4"></td>
-    <td><img src="Screenshots/1.png" alt="5"></td>
-    <td><img src="Screenshots/1.png" alt="6"></td>
+    <td><img src="https://github.com/user-attachments/assets/adad01d3-7093-40e7-ac71-aa4deb497faf" alt="4"></td>
+    <td><img src="https://github.com/user-attachments/assets/522606d6-69d5-43bb-8d23-04b23fb113f0" alt="5"></td>
+    <td><img src="https://github.com/user-attachments/assets/a2e2de2f-3166-4bea-92a4-f680f04bc5fc" alt="6"></td>
   </tr>
   <tr>
-    <td><img src="Screenshots/1.png" alt="7"></td>
+    <td><img src="https://github.com/user-attachments/assets/aa985475-ac8e-4b3b-ab3d-c79a5ce087da" alt="7"></td>
   </tr>
 </table>
-
 
 # Application Turtle
 
